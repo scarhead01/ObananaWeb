@@ -1,0 +1,74 @@
+body {
+ font-family: 'Roboto', sans-serif;
+  
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Roboto', sans-serif;
+}
+
+section{
+        padding: 20px 0;
+        position: relative;
+        
+}
+
+#hero {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    position: relative;
+}
+  .app-container {
+    max-width: 1200px; /* Optionally set a maximum width */
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+.nav-bar{
+  padding: 2px;
+}
+  
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+.chatbox {
+  z-index: 1000;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ff5733;
+  color: #fff;
+  font-size: 24px;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  position: fixed;
+top: 0;
+background-color: #fff;
+z-index: 1;
+height: 80px;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main {
+    
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
