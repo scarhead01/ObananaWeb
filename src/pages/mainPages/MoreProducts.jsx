@@ -1,7 +1,12 @@
 import React from 'react';
 import productlist from '../../components/Products/ProductList';
+import Rating from '../../components/buttons/Rating'
 import { styled } from 'styled-components';
-import Header from '../../components/header';
+import Header from '../../components/Header'
+import ChatNowButton from '../../components/buttons/ChatNowButton'
+import { Link } from 'react-router-dom';
+import ContactSupplier from '../../components/buttons/ContactSupplier';
+import Compare from '../../components/buttons/Compare';
 
 const MoreProducts = () => {
 
@@ -63,7 +68,7 @@ const MoreProducts = () => {
         <h1>More Products</h1>
         <div className="product-grid">
         {productlist.map(product => (
-  <div key={product.id} className="product-card">
+    <Link to={`/product/${product.id}`} key={product.id} className="product-card">
     <div className="product-content">
       <div className="product-image">
         <img src={product.image} alt={product.name} />
@@ -72,9 +77,26 @@ const MoreProducts = () => {
         <h3>{product.name}</h3>
         <p className="product-price">${product.price.toFixed(2)}</p>
         <p>Minimum Order: {product.minOrder}</p>
+        <div className="vendor-reputation">
+              <Rating rating={product.reputation} />
+              <span>Years Active: {product.yearsActive} </span>
+              <span className="total-rating">
+                {product.reputation.toFixed(1)}/5.0 ({product.totalRating} reviews)
+              </span>
+          </div>
+          <div className="buttons">
+            <div className='button1'> 
+              <ChatNowButton/>
+            </div>
+            <div className='button2'> 
+              <ContactSupplier/>
+            </div>
+            <Compare productId={product.id} /> {/* Pass the product id as a prop */}
+          </div>
       </div>
+      
     </div>
-  </div>
+    </Link>
 ))}
         </div>
       </div>
@@ -84,12 +106,17 @@ const MoreProducts = () => {
   </ProdCon>
 );
 }
+
 const ProdCon = styled.div`
    display: flex;
   flex-direction: column;
   height: 100vh;
 
-   
+  a {
+  color: #333; /* Change link color to your preference */
+  text-decoration: none; /* Remove underline */
+}
+
 .more-products {
   display: flex;
   justify-content: space-between;
@@ -165,14 +192,22 @@ const ProdCon = styled.div`
 }
 
 .product-image {
-  flex: 0 0 30%; /* Set a fixed width for the image */
-  margin-right: 20px; /* Add some space between image and details */
+  flex: 0 0 30%;
+  margin-right: 20px;
+  max-width: 300px; /* Set a fixed width for the image container */
+  height: 200px; /* Set a fixed height for the image container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .product-image img {
+  object-fit: cover;
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
 }
+
 
 .product-details {
   flex: 1; /* Let the details take remaining space */
@@ -191,7 +226,36 @@ const ProdCon = styled.div`
   margin: 5px 0;
 }
 
+.vendor-reputation{
+  display: flex;
+  align-items: center;
+   span {
+    margin: 0 5px; 
+  }
+}
+.buttons {
+  display: flex;
+  align-items: center;
+ 
 
+  .button1,
+.button2 {
+  margin-right: 10px; /* Add some right margin to create space between buttons */
+}
+
+  .compare-checkbox {
+    display: flex;
+    align-items: center;
+  }
+
+  .compare-checkbox input[type="checkbox"] {
+    margin-right: 5px;
+  }
+
+  .compare-checkbox label {
+    font-size: 1rem;
+  }
+}
 
 @media (max-width: 768px) {
   .more-products {

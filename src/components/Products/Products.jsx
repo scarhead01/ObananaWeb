@@ -1,22 +1,26 @@
 import React from 'react';
 import ProductList from './ProductList';
 import { styled } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 const Products = () => {
-  
+  const handleHover = (event) => {
+    const productName = event.target.innerText;
+    event.target.title = productName;
+  }
 
   return (
     <ProductCon>
       <div className="product-list">
         {ProductList.map(product => (
-          <div className="product-card" key={product.id}>
+         <Link to={`/product/${product.id}`} key={product.id} className="product-card">
             <img src={product.image} alt={product.name} className="product-image" />
             <div className="product-details">
-              <div className="product-name">{product.name}</div>
+            <div className="product-name" onMouseOver={handleHover}>{product.name}</div>
               <div className="product-price">${product.price}</div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </ProductCon>
@@ -52,6 +56,9 @@ const ProductCon =styled.div`
 .product-name {
   font-size: 1em;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-price {
