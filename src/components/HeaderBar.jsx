@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import Search from './buttons/Search';
@@ -162,9 +162,9 @@ const SubCategoryPopup = styled.div`
   z-index: 998;
   border-radius: 5px;
   max-height: 300px; /* Set a max height */
-  width: 400px; Set a specific width
+  width: 400px; 
   
-`;
+`
 
 const SubCategoryItem = styled.div`
 display: flex;

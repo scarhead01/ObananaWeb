@@ -1,6 +1,6 @@
 // ChatNowButton.js
 
-import React from 'react';
+
 
 const ChatNowButton = () => {
   const handleChatNow = (e) => {

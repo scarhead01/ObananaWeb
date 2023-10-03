@@ -1,45 +1,95 @@
-// CartContext.js
-
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(() => {
-    const storedCart = localStorage.getItem('cart');
-    return storedCart ? JSON.parse(storedCart) : [];
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems'));
+    return savedCartItems || [];
   });
 
-  const updateCart = (newCart) => {
-    setCart(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
-  };
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const addToCart = (product) => {
-    const updatedCart = [...cart, product];
-    updateCart(updatedCart);
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const addToCart = (product, quantity) => {
+    if (quantity < product.minOrder) {
+      console.log("Quantity is less than minOrder. Cannot add to cart.");
+      return;
+    }
+
+    const existingItem = cartItems.find(item => item._id === product._id);
+
+    if (existingItem) {
+      setCartItems(cartItems.map(item => {
+        if (item._id === product._id) {
+          return { ...item, quantity: item.quantity + quantity };
+        }
+        return item;
+      }));
+    } else {
+      setCartItems([...cartItems, { ...product, quantity }]);
+    }
+
+    // new add
+
+    setSelectedItems(prevSelectedItems => [...prevSelectedItems, product._id]);
   };
 
   const removeFromCart = (productId) => {
-    const updatedCart = cart.filter(item => item.id !== productId);
-    updateCart(updatedCart);
+    setCartItems(prevCartItems => prevCartItems.filter(item => item._id !== productId));
+  
+    setSelectedItems(prevSelectedItems => prevSelectedItems.filter(id => id !== productId));
+  };
+  
+  
+
+  const incrementQuantity = (productId) => {
+    setCartItems(cartItems.map(item => {
+      if (item._id === productId) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    }));
   };
 
-  const clearCart = () => {
-    updateCart([]);
+  const decrementQuantity = (productId) => {
+    setCartItems(cartItems.map(item => {
+      if (item._id === productId && item.quantity > 1) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    }));
   };
 
+  const removeItem = (productId) => {
+    setCartItems(cartItems.filter(item => item._id !== productId));
+
+    setSelectedItems(prevSelectedItems =>
+      prevSelectedItems.filter(id => id !== productId)
+    );
+  };
+
+  
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        selectedItems,
+        addToCart,
+        removeFromCart,
+        incrementQuantity,
+        decrementQuantity,
+        removeItem
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
 
 export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
-  }
-  return context;
+  return useContext(CartContext);
 };

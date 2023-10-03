@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const CompareCheckbox = ({ productId }) => {
   const handleCheckboxClick = (e) => {

@@ -1,5 +1,6 @@
-import React from 'react';
 
+
+// eslint-disable-next-line react/prop-types
 const StarRating = ({ rating }) => {
   const stars = [];
   for (let i = 1; i <= 5; i++) {

@@ -1,8 +1,9 @@
 
-import Header from '../../components/header'
+import Header from '../../components/Header'
 import HeroSlider from '../../components/HeroSlider'
 import FeaturedSlider from '../../components/FeaturedSlider'
 import Products from '../../components/Products/Products'
+import Vendors from '../../components/Vendors/Vendors'
 import ChatBox from '../../components/buttons/ChatBox';
 import '../../assets/constant-styles/constant.css'; 
 // import { ArticleSectionContainer } from '../../assets/constant-styles/constant'; '../../assets/constant-styles/constant'
@@ -77,6 +78,7 @@ const Home = () => {
   <h1>Featured Products</h1>
         <Products/>
     </FeaturedProducts>
+
 <ArticleSection2 id='article2'>
   <div className='LeftCard'>
     <div className='Card'>
@@ -106,6 +108,10 @@ const Home = () => {
 </ArticleSection2>
 
 
+<FeaturedVendors>
+  <h1>Featured Vendors</h1>
+        <Vendors/>
+    </FeaturedVendors>
 
     <Featured>
         <div className="featured">
@@ -277,13 +283,16 @@ const Featured = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 10px;
+  background-color: white;
  
   .featured{
+    padding: 20px;
   justify-content: center;
   align-items: center;
 
   .heading {
     display: flex;
+    background-color: white;
     h1{
     text-align: center;
     font-size: 48px;
@@ -298,6 +307,12 @@ const FeaturedProducts = styled.div`
     display: flex;
   flex-direction: column;
   align-items: center;
+`
+const FeaturedVendors = styled.div`
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 
 `
 export default Home

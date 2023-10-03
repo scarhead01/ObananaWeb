@@ -9,7 +9,7 @@ const Search = () => {
 
   const onEnterPressed = (searchQuery) => {
     // Trigger navigation to MoreProducts using navigate function
-    navigate('/MoreProducts');
+    navigate('/Search-Results');
   };
 
   const { searchQuery, handleSearch, handleKeyPress } = useSearch(onEnterPressed);

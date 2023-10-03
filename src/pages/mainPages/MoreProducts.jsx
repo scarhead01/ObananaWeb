@@ -1,5 +1,6 @@
-import React from 'react';
-import productlist from '../../components/Products/ProductList';
+
+import ProductList from '../../components/Products/ProductList';
+
 import Rating from '../../components/buttons/Rating'
 import { styled } from 'styled-components';
 import Header from '../../components/Header'
@@ -7,9 +8,18 @@ import ChatNowButton from '../../components/buttons/ChatNowButton'
 import { Link } from 'react-router-dom';
 import ContactSupplier from '../../components/buttons/ContactSupplier';
 import Compare from '../../components/buttons/Compare';
+import { useEffect, useState } from 'react';
 
 const MoreProducts = () => {
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    ProductList()
+      .then(data => setProducts(data))
+      .catch(error => console.error('Error:', error));
+  }, []);
+
+  const baseUrl = "http://143.42.66.33:8000/images/";
   return (
     <ProdCon>
          <Header className="header" />
@@ -67,21 +77,21 @@ const MoreProducts = () => {
       <div className="main-body">
         <h1>More Products</h1>
         <div className="product-grid">
-        {productlist.map(product => (
-    <Link to={`/product/${product.id}`} key={product.id} className="product-card">
+        {products.map(product  => (
+    <Link to={`/product/${product._id}`} key={product._id} className="product-card">
     <div className="product-content">
       <div className="product-image">
-        <img src={product.image} alt={product.name} />
+      <img src={baseUrl + product.file_path_image} alt={product.product_name}/>
       </div>
       <div className="product-details">
         <h3>{product.name}</h3>
-        <p className="product-price">${product.price.toFixed(2)}</p>
+        {/* <p className="product-price">${product.price.toFixed(2)}</p> */}
         <p>Minimum Order: {product.minOrder}</p>
         <div className="vendor-reputation">
               <Rating rating={product.reputation} />
               <span>Years Active: {product.yearsActive} </span>
               <span className="total-rating">
-                {product.reputation.toFixed(1)}/5.0 ({product.totalRating} reviews)
+                {/* {product.reputation.toFixed(1)}/5.0 ({product.totalRating} reviews) */}
               </span>
           </div>
           <div className="buttons">
@@ -172,7 +182,7 @@ const ProdCon = styled.div`
 
 .main-body {
   width: 85%; /* Adjust the width as needed */
-  padding: 20px;
+  padding: 10px;
 }
 
 
