@@ -50,16 +50,17 @@ const CartPage = () => {
       setErrorMessage("Quantity must be equal or greater than the minOrder for selected items.");
       return;
     }
+    localStorage.setItem('selectedItemsForCheckout', JSON.stringify(selectedItemsForCheckout));
   
     // Proceed to checkout
     navigate('/checkout', { state: { selectedItems: selectedItemsForCheckout } });
   };
 
-  const baseUrl = "http://143.42.66.33:8000/images/";
+  // const baseUrl = "http://143.42.66.33:8000/images/";
 
   return (
     <Con>
-      <Header className="header" />
+      {/* <Header className="header" /> */}
       <div className="main">
         <div className="app-container">
           <div className='CartContainer'>
@@ -73,15 +74,16 @@ const CartPage = () => {
                 <ul>
                   {cartItems.map(item => (
                     <div key={item._id} className="CartItem">
-                      <div className="CartItemImage">
-                        <img src={baseUrl + item.file_path_image} alt={item.product_name} style={{ maxWidth: '100px' }} />
-                      </div>
-                      <div className="CartItemInfo">
                         <input
                           type="checkbox"
                           checked={selectedItems.includes(item._id)}
                           onChange={() => handleCheckboxChange(item._id)}
                         />
+                      <div className="CartItemImage">
+                        <img src={item.product_image} alt={item.product_name} style={{ maxWidth: '100px' }} />
+                      </div>
+                      <div className="CartItemInfo">
+                      
                         <div className='CartItemName'>{item.product_name}</div>
                         <div className="product-details">
                           <div className="product-detail">

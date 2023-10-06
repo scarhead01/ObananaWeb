@@ -49,13 +49,13 @@ const ProductPage = () => {
     e.preventDefault();
   
     const parsedQuantity = parseInt(quantity, 10);
-    const parsedMinOrder = parseInt(product.minOrder, 10);
   
-    if (parsedQuantity < parsedMinOrder) {
+    if (isNaN(parsedQuantity)) {
+      setErrorMessage("Invalid quantity. Please enter a valid number.");
+    } else if (parsedQuantity < product.minOrder) {
       setErrorMessage("Quantity is less than minOrder. Cannot add to cart.");
     } else {
-      addToCart({ ...product, minOrder: parsedMinOrder }, quantity);
-
+      addToCart({ ...product, minOrder: product.minOrder }, parsedQuantity);
       setErrorMessage("Product added to cart!");
     }
   
@@ -65,7 +65,8 @@ const ProductPage = () => {
     }, 2000);
   };
   
-  const baseUrl = "http://143.42.66.33:8000/images/";
+  
+  // const baseUrl = "http://143.42.66.33:8000/images/";
 
  const [comments, setComments] = useState([
   {
@@ -83,14 +84,14 @@ const ProductPage = () => {
 
   return (
     <Con>
-    <Header className="header" />
+    {/* <Header className="header" /> */}
     <div className="main">
       <div className="app-container">
         {product && (
           <div className="product-page-container">
             <div className="left-div">
               <div className="product-image-container">
-                 <img src={baseUrl + product.file_path_image} alt={product.product_name} className="product-image" />
+                 <img src={product.product_image} alt={product.product_name} className="product-image" />
               </div>
             </div>
             <div className="middle-div">
@@ -312,10 +313,16 @@ const Con = styled.div`
     padding: 5px;
     border: none;
     border-radius: 3px;
-    color: white;
+    color: #fff;
     background-color: #ff5733;
     margin: 10px;
   }
+
+  .cart-button:disabled {
+    background-color: #ccc; /* Change to the desired color */
+    color: #666; /* Change to the desired color */
+}
+  
   }
 
   
@@ -373,6 +380,7 @@ const Con = styled.div`
 .product-details ol {
   margin: 0;
   padding: 0;
+  
 }
 
 .product-details li {

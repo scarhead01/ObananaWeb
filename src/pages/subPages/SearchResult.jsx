@@ -8,6 +8,7 @@ import ChatNowButton from '../../components/buttons/ChatNowButton';
 import ContactSupplier from '../../components/buttons/ContactSupplier';
 import Compare from '../../components/buttons/Compare';
 import { styled } from 'styled-components';
+import axios from 'axios';
 
 const SearchResult = () => {
   const [currentTab, setCurrentTab] = useState('products');
@@ -24,11 +25,11 @@ const SearchResult = () => {
       .catch(error => console.error('Error fetching vendors:', error));
   }, []);
 
-  const baseUrl = "http://143.42.66.33:8000/images/";
+  // const baseUrl = "http://143.42.66.33:8000/images/";
 
   return (
     <SearchCon>
-      <Header className="header" />
+      {/* <Header className="header" /> */}
       <div className="main">
         <div className="app-container">
         <div className="more-products">
@@ -102,7 +103,7 @@ const SearchResult = () => {
                   <Link to={`/product/${product._id}`} key={product._id} className="product-card">
                   <div className="product-content">
       <div className="product-image">
-      <img src={baseUrl + product.file_path_image} alt={product.product_name}/>
+      <img src={product.product_image} alt={product.product_name}/>
       </div>
       <div className="product-details">
         <h3>{product.name}</h3>
@@ -134,7 +135,7 @@ const SearchResult = () => {
                  
                   <div className="product-content">
       <div className="product-image">
-      <img src={baseUrl + vendor.file_path_image} alt={vendor.product_name}/>
+      <img src={vendor.product_image} alt={vendor.product_name}/>
       </div>
       <div className="product-details">
         <h3>{vendor.user_login}</h3>

@@ -22,7 +22,7 @@ const MoreProducts = () => {
   const baseUrl = "http://143.42.66.33:8000/images/";
   return (
     <ProdCon>
-         <Header className="header" />
+         {/* <Header className="header" /> */}
          <div className="main">
         <div className="app-container">
      <div className="more-products">
@@ -81,7 +81,7 @@ const MoreProducts = () => {
     <Link to={`/product/${product._id}`} key={product._id} className="product-card">
     <div className="product-content">
       <div className="product-image">
-      <img src={baseUrl + product.file_path_image} alt={product.product_name}/>
+      <img src={baseUrl + product.product_image} alt={product.product_name}/>
       </div>
       <div className="product-details">
         <h3>{product.name}</h3>

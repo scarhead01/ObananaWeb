@@ -36,7 +36,6 @@ const StyledSwiper = styled(Swiper)`
   .swiper-slide {
     text-align: center;
     font-size: 18px;
-    background: #fff;
     border: 1px solid #ccc;
     display: flex;
     justify-content: center;

@@ -8,19 +8,26 @@ const MyPurchases = () => {
     
     
     const location = useLocation();
-  const selectedItems = location.state?.selectedItems || [];
+  // const selectedItems = location.state?.selectedItems || [];
   const [activeTab, setActiveTab] = useState('toShip'); 
+  const [selectedItems, setSelectedItems] = useState([]);
 
-
-
+  useEffect(() => {
+    const storedItemsForPurchases = JSON.parse(localStorage.getItem('selectedItemsForPurchases'));
+    if (storedItemsForPurchases) {
+      setSelectedItems(storedItemsForPurchases);
+    }
+  }, []);
   
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
+  // const baseUrl = "http://143.42.66.33:8000/images/";
+
   return (
     <MyPurchasesContainer>
-        <Header className="header" />
+        {/* <Header className="header" /> */}
       <div className="main">
         <div className="app-container">
       <div className='TabsContainer'>
@@ -48,13 +55,13 @@ const MyPurchases = () => {
         {activeTab === 'toShip' && <div> {activeTab === 'toShip' && (
               <ul className="ItemList">
               {selectedItems.map((item) => (
-                <li className="Item" key={item.id}>
-                  <img src={item.image} alt={item.name} />
+                <li className="Item" key={item._id}>
+                  <img src={item.product_image} alt={item.name} />
                   <div className="ItemInfo">
-                    <p className="ItemName">{item.name}</p>
+                    <p className="ItemName">{item.product_name}</p>
                     <p className="ItemQuantity">Quantity: {item.quantity}</p>
                     <p className="ItemTotal">
-                      Total: ${(item.price * item.quantity).toFixed(2)}
+                      Total: ${(item.regular_price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </li>

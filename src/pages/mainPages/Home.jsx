@@ -5,7 +5,7 @@ import FeaturedSlider from '../../components/FeaturedSlider'
 import Products from '../../components/Products/Products'
 import Vendors from '../../components/Vendors/Vendors'
 import ChatBox from '../../components/buttons/ChatBox';
-import '../../assets/constant-styles/constant.css'; 
+// import '../../assets/constant-styles/constant.css'; 
 // import { ArticleSectionContainer } from '../../assets/constant-styles/constant'; '../../assets/constant-styles/constant'
 import { styled } from 'styled-components'
 import A1 from '../../assets/article-images/01.jpg';
@@ -53,7 +53,7 @@ const Home = () => {
    
   return (
    <HomeCon>
-     <Header className="header" />
+     {/* <Header className="header" /> */}
      <div className="main">
      <section >
     <HeroSlider/>  
@@ -282,14 +282,13 @@ const ArticleSection2 = styled.section`
 const Featured = styled.div`
   flex-wrap: wrap;
   justify-content: center;
-  margin: 10px;
-  background-color: white;
  
+
   .featured{
     padding: 20px;
   justify-content: center;
   align-items: center;
-
+ 
   .heading {
     display: flex;
     background-color: white;
@@ -298,8 +297,14 @@ const Featured = styled.div`
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
     color: #F0AD45;
+
+   
   }
  }
+ .featured-slides{
+      background-color: white;
+      padding: 20px;
+    }
   }
 `;
 

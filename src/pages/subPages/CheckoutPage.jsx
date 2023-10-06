@@ -24,22 +24,32 @@ const CheckoutPage = () => {
 
   
   const totalPrice = selectedItems.reduce((total, item) => {
-    return total + item.price * item.quantity;
+    return total + item.regular_price * item.quantity;
   }, 0);
 
   // New Edit
   const handleCheckout = () => {
-    console.log("Selected Items:", selectedItems); // Add this line
+    console.log("Selected Items:", selectedItems);
     selectedItems.forEach(item => {
-     removeFromCart(item.id);
+      removeFromCart(item._id);
     });
   
-    navigate('/purchases', { state: { selectedItems } });
+    // Retrieve existing items from localStorage
+    const storedItemsForPurchases = JSON.parse(localStorage.getItem('selectedItemsForPurchases')) || [];
+  
+    // Append new items to existing ones
+    const updatedItemsForPurchases = [...storedItemsForPurchases, ...selectedItems];
+  
+    // Save updated items to localStorage
+    localStorage.setItem('selectedItemsForPurchases', JSON.stringify(updatedItemsForPurchases));
+  
+    navigate('/purchases');
   };
 
+  // const baseUrl = "http://143.42.66.33:8000/images/";
   return (
     <CheckoutCon>
-      <Header className="header" />
+      {/* <Header className="header" /> */}
       <div className="main">
         <div className="app-container">
           <div className="address-box" onClick={() => setIsPopupOpen(true)}>{selectedAddress}</div>
@@ -56,18 +66,18 @@ const CheckoutPage = () => {
             <h1 className="CheckoutHeader">Checkout</h1>
             <ul className="ItemList">
               {selectedItems.map((item) => (
-                <li className="Item" key={item.id}>
+                <li className="Item" key={item._id}>
                   <img
                     className="ItemImage"
-                    src={item.image}
-                    alt={item.name}
+                    src={item.product_image}
+                    alt={item.product_name}
                     style={{ maxWidth: '100px' }}
                   />
                   <div className="ItemInfo">
-                    <p className="ItemName">{item.name}</p>
-                    <p className="ItemQuantity">Quantity: {item.quantity}</p>
+                    <p className="ItemName">{item.product_name}</p>
+                    <p className="ItemQuantity">₱{item.regular_price} &nbsp;&nbsp; x{item.quantity}</p>
                     <p className="ItemTotal">
-                      Total: ${(item.price * item.quantity).toFixed(2)}
+                      Total: ${(item.regular_price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </li>

@@ -1,5 +1,5 @@
 
-import MoreProducts from '../../pages/mainPages/MoreProducts';  
+// import SearchResults from '../../pages/subPages/SearchResult';  
 import useSearch from '../../hooks/useSearch';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';

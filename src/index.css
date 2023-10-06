@@ -71,7 +71,7 @@ button:focus-visible {
 :root {
   margin: 0;
   padding: 0;
-  display: block;
+  /* display: block; */
   top:0;
   left: 0;
   padding-top: 0;
@@ -80,12 +80,15 @@ button:focus-visible {
  justify-content: center;
 }
 
-body {
+html, body {
+  height: 100%;
   top:0;
   left: 0;
   padding-top: 0; 
    margin: 0;
   padding: 0;
+  overflow-y: auto;
+   background-color: #f4f4f4 ;
 }
 
 

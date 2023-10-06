@@ -40,7 +40,7 @@ const VendorPage = () => {
   const formattedDateString = formattedDate.toLocaleDateString('en-US', options);
    return (
     <VendorPageCon>
-      <Header className="header" />
+      {/* <Header className="header" /> */}
       <div className="main">
         <div className="app-container">
           {vendor && (
@@ -83,7 +83,7 @@ const VendorPage = () => {
 const VendorPageCon = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  height: 100vh;
 
   
   .vendor-page-container {

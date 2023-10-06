@@ -8,17 +8,17 @@ const navs =[
     link: "/"
   },
   {
-    name:"Sell In Obanana",
-    link: "/"
+    name:"Products",
+    link: "/productlistpage/"
   },
-  {
-    name:"Feedback",
-    link: "/"
-  },
-  {
-    name:"FAQs",
-    link: "/"
-  },
+  // {
+  //   name:"Feedback",
+  //   link: "/"
+  // },
+  // {
+  //   name:"FAQs",
+  //   link: "/"
+  // },
 ];
 
 const NavBar = () => {
