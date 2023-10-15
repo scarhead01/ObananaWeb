@@ -133,7 +133,7 @@ position: absolute;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: ${({ show }) => (show ? 'block' : 'none')};
-  z-index: 999;
+  z-index: 1000;
   border-radius: 5px;
   max-height: 300px; /* Set a max height */
   width: 200px; /* Set a specific width */
@@ -159,7 +159,7 @@ const SubCategoryPopup = styled.div`
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: ${({ show }) => (show ? 'flex' : 'none')};
-  z-index: 998;
+  z-index: 1001;
   border-radius: 5px;
   max-height: 300px; /* Set a max height */
   width: 400px; 
@@ -187,7 +187,7 @@ const SubNavItem = styled.li`
 `;
 
 const CenteredSearch = styled.div`
-  flex: 1; /* Take remaining space */
+  flex: 1; 
   display: flex;
   justify-content: center;
   

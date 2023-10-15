@@ -79,14 +79,21 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-import ProductList from './ProductList';
+import ProductList from '../Products/ProductList';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  
 
   useEffect(() => {
     ProductList()
-      .then(data => setProducts(data))
+      .then(data => {
+        // Shuffle the products array
+        const shuffledProducts = data.sort(() => Math.random() - 0.5);
+        // Take the first 5 products
+        const randomProducts = shuffledProducts.slice(0, 5);
+        setProducts(randomProducts);
+      })
       .catch(error => console.error('Error:', error));
   }, []);
 
@@ -99,6 +106,8 @@ const Products = () => {
 
   return (
     <ProductCon>
+      <div className="wrapper">
+      <div className="title"><h6>Featured Products</h6></div>
       <div className="product-list">
         {products.map(product => (
           <Link to={`/product/${product._id}`} key={product._id} className="product-card">
@@ -112,16 +121,22 @@ const Products = () => {
           </Link>
         ))}
       </div>
+      </div>
     </ProductCon>
   );
 };
 const ProductCon = styled.div`
+width: 90%;
+margin: auto;
   .product-list {
+    justify-content: center;
     display: flex;
     flex-wrap: wrap;
     gap: 20px; 
   }
-
+.title{
+  h6{font-weight: bold;}
+}
   .product-card {
      text-decoration: none;
   color: inherit;
@@ -137,7 +152,7 @@ const ProductCon = styled.div`
   width: 100%;
   height: 200px; /* Set a fixed height for the image box */
   background-color: #ffffff; /* Choose a suitable background color */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
   display: flex;
   justify-content: center;
   align-items: center;

@@ -2,20 +2,21 @@
 import HeaderBar from './HeaderBar'
 import { styled } from 'styled-components'
 import UpperHeader from './UpperHeader'
+import Advertise from './Advertise'
 
 
 const Header = () => {
   return (
   <HeaderCon>
+    <Advertise/>
     <UpperHeader/>
-    <HeaderBar/>
-    
   </HeaderCon>
 
   )
 }
 
 const HeaderCon = styled.header`
+
   top: 0; /* Attach it to the top of the viewport */
   width: 100%; /* Make it take up the full width */
   background-color: #fff; /* Example background color */

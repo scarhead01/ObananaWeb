@@ -18,6 +18,7 @@ const Address = ({ customerId }) => {
     fetchData();
   }, [customerId]);
 
+  console.log(addressData)
   return (
     <div>
       {addressData ? (

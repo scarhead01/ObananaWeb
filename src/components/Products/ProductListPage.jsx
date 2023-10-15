@@ -5,9 +5,14 @@ import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 import ProductList from './ProductList';
+import { Pagination } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProductListPage = () => {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [maxVisiblePages, setMaxVisiblePages] = useState(10);
 
   useEffect(() => {
     ProductList()
@@ -15,40 +20,91 @@ const ProductListPage = () => {
       .catch(error => console.error('Error:', error));
   }, []);
 
-  const handleHover = (event) => {
+  const handleHover = event => {
     const productName = event.target.innerText;
     event.target.title = productName;
   };
 
-//   const baseUrl = "http://143.42.66.33:8000/images/";
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPageCount = Math.ceil(products.length / itemsPerPage);
+
+  const getPageNumbers = () => {
+    const activePage = currentPage;
+    const totalPageCount = Math.ceil(products.length / itemsPerPage);
+
+    if (totalPageCount <= maxVisiblePages) {
+      return [...Array(totalPageCount).keys()].map(i => i + 1);
+    }
+
+    let startPage = Math.max(activePage - Math.floor(maxVisiblePages / 2), 1);
+    let endPage = Math.min(startPage + maxVisiblePages - 1, totalPageCount);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(endPage - maxVisiblePages + 1, 1);
+    }
+
+    return [...Array(endPage - startPage + 1).keys()].map(i => i + startPage);
+  };
 
   return (
     <ProductCon>
-         <div className="main">
+      <div className="main">
         <div className="app-container">
-      <div className="product-list">
-        {products.map(product => (
-          <Link to={`/product/${product._id}`} key={product._id} className="product-card">
-            <div className="image-box">
-              <img src={product.product_image} alt={product.product_name} className="product-image" />
-            </div>
-            <div className="product-details">
-              <div className="product-name" onMouseOver={handleHover}>{product.product_name}</div>
-              <div className="product-price">₱{product.regular_price}</div>
-            </div>
-          </Link>
-        ))}
-      </div>
-      </div>
+          <div className="product-list">
+            {currentItems.map(product => (
+              <Link to={`/product/${product._id}`} key={product._id} className="product-card">
+                <div className="image-box">
+                  <img src={product.product_image} alt={product.product_name} className="product-image" />
+                </div>
+                <div className="product-details">
+                  <div className="product-name" onMouseOver={handleHover}>{product.product_name}</div>
+                  <div className="product-price">₱{product.regular_price}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <CustomPagination>
+          <Pagination.Prev
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+            {getPageNumbers().map(number => (
+              <Pagination.Item
+                key={number}
+                active={number === currentPage}
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </Pagination.Item>
+            ))}
+            <Pagination.Next
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage === totalPageCount}
+            />
+          </CustomPagination>
+        </div>
       </div>
     </ProductCon>
   );
 };
 const ProductCon = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
   .product-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px; 
+    padding: 20px 0;
+    justify-content: center;
   }
 
   .product-card {
@@ -95,7 +151,28 @@ const ProductCon = styled.div`
     font-size: 1em;
     color: #333;
   }
+
 `;
 
+const CustomPagination = styled(Pagination)`
+  margin-top: 20px;
+  
+  .page-item {
+    margin: 0 2px;
+    font-size: 16px;
+  }
 
+  .page-link {
+    color: #333;
+  }
+
+  .page-item.active .page-link {
+    background-color: #333;
+    border-color: #333;
+  }
+
+  .page-link:focus {
+    box-shadow: none;
+  }
+`;
 export default ProductListPage;

@@ -15,7 +15,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [vendor, setVendor] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  console.log('pagerendered');
   // const product = ProductList.find(product => product.id === parseInt(id, 10));
  
   useEffect(() => {
@@ -87,7 +87,7 @@ const ProductPage = () => {
     {/* <Header className="header" /> */}
     <div className="main">
       <div className="app-container">
-        {product && (
+        {product ? (
           <div className="product-page-container">
             <div className="left-div">
               <div className="product-image-container">
@@ -162,7 +162,7 @@ const ProductPage = () => {
               
             </div>
           </div>
-        )}
+        ) : null}
         <div className="vendor-info">
         {vendor && (
             <div className="vendor-page-container">
@@ -181,7 +181,7 @@ const ProductPage = () => {
             </div>
           )}
 </div>
-        {product && (
+        {product ? (
   <div className="product-details">
     <h2>Product Overview</h2>
     <p>
@@ -205,9 +205,9 @@ const ProductPage = () => {
       <li>Thanks for your understandings.</li>
     </ol>
   </div>
-)}
+): null}
 
-{product && (
+{product ? (
         <div className="comments-section">
           <h2>Comments</h2>
           <ul>
@@ -220,7 +220,7 @@ const ProductPage = () => {
             ))}
           </ul>
         </div>
-      )}
+      ) : null}
       </div>
     </div>
   </Con>

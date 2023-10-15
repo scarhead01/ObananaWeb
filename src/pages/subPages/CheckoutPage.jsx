@@ -15,6 +15,7 @@ const CheckoutPage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleAddressSelect = (address) => {
+    console.log("Selected Address:", address);
     setSelectedAddress(address);
     setIsPopupOpen(false);
   };
@@ -45,22 +46,22 @@ const CheckoutPage = () => {
   
     navigate('/purchases');
   };
-
+  
   // const baseUrl = "http://143.42.66.33:8000/images/";
   return (
     <CheckoutCon>
       {/* <Header className="header" /> */}
       <div className="main">
         <div className="app-container">
-          <div className="address-box" onClick={() => setIsPopupOpen(true)}>{selectedAddress}</div>
+        <div className="address-box" onClick={() => setIsPopupOpen(true)}>{selectedAddress}</div>
           {isPopupOpen && (
-            <AddressPopup
-              addresses={addresses}
-              onSelect={handleAddressSelect}
-              selectedAddress={selectedAddress}
-              onClose={() => setIsPopupOpen(false)}
-            />
-          )}
+  <AddressPopup
+    addresses={addresses}
+    onSelect={handleAddressSelect}
+    selectedAddress={selectedAddress}
+    onClose={() => setIsPopupOpen(false)}
+  />
+)}
 
           <div className="CheckoutContainer">
             <h1 className="CheckoutHeader">Checkout</h1>
@@ -97,7 +98,7 @@ const CheckoutPage = () => {
 const CheckoutCon = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
 
   .address-box {
     background-color: #fff;

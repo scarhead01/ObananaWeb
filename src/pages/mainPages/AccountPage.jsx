@@ -65,9 +65,10 @@ const MyAccount = () => {
 const AccountCon = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+height: 100%;
 
   .account-page-container {
+    margin: 20px 0;
     display: flex;
     padding: 10px;
     background-color: white;

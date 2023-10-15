@@ -11,7 +11,9 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { styled } from 'styled-components';
 
-const FeaturedSlider = () => {
+const Hero = () => {
+
+
   return (
     <StyledSwiper
     // install Swiper modules
@@ -23,16 +25,16 @@ const FeaturedSlider = () => {
     onSwiper={(swiper) => console.log(swiper)}
     onSlideChange={() => console.log('slide change')}
   >
-    <SwiperSlide><img src={slide1} alt="" /></SwiperSlide>
-    <SwiperSlide><img src={slide2} alt="" /></SwiperSlide>
-    <SwiperSlide><img src={slide3} alt="" /></SwiperSlide>
-    <SwiperSlide><img src={slide3} alt="" /></SwiperSlide>
+    <SwiperSlide className="swiper-slide"><img src={slide1} alt="" /></SwiperSlide>
+    <SwiperSlide className="swiper-slide"><img src={slide2} alt="" /></SwiperSlide>
+    <SwiperSlide className="swiper-slide"><img src={slide3} alt="" /></SwiperSlide>
+    <SwiperSlide className="swiper-slide"><img src={slide3} alt="" /></SwiperSlide>
   </StyledSwiper>
   )
 }
 
 const StyledSwiper = styled(Swiper)`
-  /* Add your custom styles here */
+
   .swiper-slide {
     text-align: center;
     font-size: 18px;
@@ -47,14 +49,6 @@ const StyledSwiper = styled(Swiper)`
    border-radius: 20px;
    }
   }`
-export default FeaturedSlider
+export default Hero
 
 
-
-
-//   img {
-//     max-width: 100%;
-//     max-height: 100%;
-//   }
-// `;
-// export default HeroSlider

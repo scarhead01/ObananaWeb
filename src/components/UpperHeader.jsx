@@ -9,66 +9,118 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Search from './buttons/Search';
+import Login from '../auth/Login';
+import { useState } from 'react';
 
 const UpperHeader = () => {
+  const [showLogin, setShowLogin] = useState(false);
+
+  const toggleLoginModal = () => {
+    setShowLogin(!showLogin);
+  };
   return (
    <Container>
-    <div className="left">
-      <div className="ObnLogo">
-        <img className='logo' src={Logo} alt="" />
+    <div className="upper">
+    <div className="ObnLogo"> 
+    <a href="/">
+        <img className='logo' src={Logo} alt="" /></a>
       </div>
-      <div className='nav-bar'> 
-        <NavigationBar/>
+    <div className='search'> 
+        <Search/>
       </div>
-    </div>
-    <div className="right">
-      <div className="social">
-        <a href="https://www.facebook.com/ObananaPH/" target="blank" > 
-          <FontAwesomeIcon className='icon' icon={faFacebook} />
-        </a>
-        <a href="https://www.instagram.com/obananaph/?hl=en" target="blank">
-          <FontAwesomeIcon className='icon' icon={faInstagram} />
-        </a>
-        <a href="https://ph.linkedin.com/company/obananaph" target="blank">
-          <FontAwesomeIcon className='icon' icon={faLinkedin} />
-        </a>
-        <a href="https://www.youtube.com/channel/UCWFO_X9pTrhRv2LLFOZdCdQ" target="blank">
-          <FontAwesomeIcon className='icon' icon={faYoutube} />
-        </a>
+      <div className="sign-up">
+        <button>Sign Up</button>
       </div>
-      <div className="button">
+      </div>
+      <div className="lower">
+        <div className="buyer-supplier-button">
+          <button>I'm a Buyer</button> | <button>I'm a Supplier</button>
+        </div>
+        <div className="app">
+          <button>Get Mobile App</button>
+        </div>
+        <div className="login">
+        <button onClick={toggleLoginModal}>Login</button>
+        {showLogin && <Login onClose={toggleLoginModal} />}
+      </div>
+   
+      </div>
+   
+
+      {/* <div className="button">
       <CartButton/>
       <AccountButton/>
-      </div>
-    </div>
+      </div> */}
    </Container>
   )
 }
-const Container =styled.div `
-   display: flex;
-  justify-content: space-between;
+const Container = styled.div`
   align-items: center;
   border-bottom: 1px solid #ddd;
-  padding-left: 30px;
-  padding-right:30px ;
-    
-  
-    & .ObnLogo{
-      .logo{
-        width: 140px;
-      }
+  padding: 10px 30px;
+
+  .upper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .ObnLogo {
+    .logo {
+      width: 140px;
     }
-    & .social{
-      display: flex;
-      .icon{
-        color: black;
-        font-size: 20px;
-       padding: 5px;
-       .button{
-        width: 500px;
-       }
+  }
+
+  .search {
+    flex-grow: 1;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    max-width: 50%;
+  }
+
+  .sign-up {
+  }
+
+  .lower {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; 
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .buyer-supplier-button,
+  .app,
+  .login {
+    display: flex;
+    align-items: center;
+  }
+
+  .buyer-supplier-button {
+    flex: 1;
+    justify-content: flex-start;
+    button {
+      border: none;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      font: inherit;
     }
-    }
-  
-`
+  }
+
+  .app {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .login {
+    flex: 1;
+    justify-content: flex-end;
+    text-align: right;
+  }
+`;
+
 export default UpperHeader

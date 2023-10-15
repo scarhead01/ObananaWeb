@@ -1,18 +1,31 @@
 import React from 'react';
-import AddressSelection from '../Selection/AddressSelection';
+// import AddressSelection from '../Selection/AddressSelection';
+import Addresses from '../Customers/Address';
 import styled from 'styled-components';
 
 const AddressPopup = ({ onClose, onSelect, selectedAddress }) => {
+  const customerId = '651444143bf84bb9914a6964';
+
+  const handleAddressSelect = (address) => {
+    onSelect(address); // Call the onSelect function with the selected address.
+    onClose(); // Close the modal if needed.
+  };
+
+  
   return (
     <Con>
-    <div className="AddressSelectionPopup">
-      <div className="popup-content">
-        <button className="close-button" onClick={onClose}>
-          Close
-        </button>
-        <AddressSelection onSelect={onSelect} selectedAddress={selectedAddress} />
+      <div className="AddressSelectionPopup">
+        <div className="popup-content">
+          <button className="close-button" onClick={onClose}>
+            Close
+          </button>
+         <Addresses 
+  customerId={customerId} 
+  onSelect={handleAddressSelect} // Make sure onSelect is defined and working in the Address component.
+  selectedAddress={selectedAddress} 
+/>
+        </div>
       </div>
-    </div>
     </Con>
   );
 };

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from '../pages/mainPages/home';
+import Home from '../pages/mainPages/Home';
 import Cart from '../pages/mainPages/CartPage';
 import MoreProducts from '../pages/mainPages/MoreProducts';
 import ProductPage from '../pages/mainPages/ProductPage';
@@ -12,8 +12,46 @@ import AccountPage from '../pages/mainPages/AccountPage';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import ProductListPage from '../components/Products/ProductListPage';
+import Login from '../auth/Login';
+import Register from '../auth/Register';
+import NewAddressFormPopup from '../components/Customers/NewAdress';
+import { get_all_products } from "../services/API/controllers/ProductController";
 
 const WebRoutes = () => {
+  const [product, setproduct] = useState([]);
+  const [error, setError] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [prodIsLoading, setprodIsLoading] = useState(true); // Add a loading state
+  function shuffleArray(array) {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ];
+    }
+    return shuffledArray;
+  }
+  useEffect(() => {
+    // Fetch vendors and update the state
+     get_all_products()
+     .then((result) => {
+      //  console.log("result" + result);
+
+       if (result.error) {
+         setError(result.error);
+       } else {
+         setproduct(shuffleArray(result.data));
+       }
+     })
+     .catch((error) => {
+       setError(error.message);
+     })
+     .finally(() => {
+       setprodIsLoading(false); // Set loading to false when done loading
+     });
+  }, []);
 
   return (
     <Container>
@@ -35,6 +73,10 @@ const WebRoutes = () => {
             <Route path="/Search-Results" element={<SearchResult />} />
             <Route path="/MyAccount" element={<AccountPage />} />
             <Route path="/productlistpage/" element={<ProductListPage />} />
+
+            <Route exact path="/login" element={<Login/>} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/new-address" element={<NewAddressFormPopup />} />
           </Routes>
         </div>
       </Router>
@@ -56,6 +98,7 @@ const Container = styled.div`
   }
 
   .mains {
+    overflow-x: hidden;
     flex-grow: 1;
     position: relative;
     overflow-y: auto;

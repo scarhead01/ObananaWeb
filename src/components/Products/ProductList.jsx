@@ -156,7 +156,8 @@
 
 import axios from 'axios';
 
-const apiUrl = 'http://143.42.66.33:8000/api/v1/products';
+const apiUrl = 'https://api.obanana.shop/api/v1/products';
+// const apiUrl = 'http://143.42.66.33:8000/api/v1/products';
 
 const staticMinOrder = 5;
 
