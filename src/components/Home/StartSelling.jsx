@@ -49,7 +49,8 @@ const StartSelling = () => {
 
 const Con = styled.div`
 height: 100vh;
-
+width: 90%;
+margin: auto;
     .container{
         background-image: url(${map}); /* Use 'url()' to specify the image path */
         background-size: cover; /* Adjust as needed */

@@ -9,14 +9,14 @@ import VendorList from '../Vendors/VendorList';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const VendorComponent = () => {
-  const [vendors, setVendors] = useState([]);
+const VendorComponent = ({vendors, item}) => {
+  // const [vendors, setVendors] = useState([]);
 
-  useEffect(() => {
-    VendorList()
-      .then(data => setVendors(data))
-      .catch(error => console.error('Error:', error));
-  }, []);
+  // useEffect(() => {
+  //   VendorList()
+  //     .then(data => setVendors(data))
+  //     .catch(error => console.error('Error:', error));
+  // }, []);
 
   const baseUrl = "http://143.42.66.33:8000/images/";
 
@@ -46,13 +46,13 @@ const VendorComponent = () => {
     }
   }}
 >
-      {vendors.map(vendor => (
-        <SwiperSlide key={vendor._id} className="swiper-slide">
-          <Link to={`/vendor/${vendor._id}`} className="vendor-card">
-              <img src={baseUrl + vendor.file_path_image} alt={vendor.user_login} />
+      {vendors?.map(vendors => (
+        <SwiperSlide key={vendors._id} className="swiper-slide">
+          <Link to={`/vendor/${vendors._id}`} className="vendor-card">
+              <img src={baseUrl + vendors.file_path_image} alt={vendors.user_login} />
               <div className="vendor-details">
-              <div className="vendor-name"  onMouseOver={handleHover} >{vendor.user_login}</div>
-              <div className="details"><span className="bold-text">Years in Industry:</span> {vendor.date_registered}</div>
+              <div className="vendor-name"  onMouseOver={handleHover} >{vendors.user_login}</div>
+              <div className="details"><span className="bold-text">Years in Industry:</span> {vendors.date_registered}</div>
               <div className="details"><span className="bold-text">Products:</span> Solar Panel, Battery, Controllers, Inverter, Other Supplies</div>
               <div className="details"><span className="bold-text">Services:</span> Installation, Maintenance, Delivery</div>
               <div className="button">

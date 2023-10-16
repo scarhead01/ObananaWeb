@@ -139,23 +139,20 @@ const StyledContainer = styled.div`
   .lower {
     position: relative;
     padding: 10px;
-    
+  
   }
 
   .lower-content{
     display: flex;
     flex-wrap: wrap;
-    width: 100vw;
-    justify-content: center;
+    justify-content:center;
   }
 
   .left {
-
+    justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
     display: flex;
-   justify-content: space-evenly;
-   width: 75%;
   }
 
 
@@ -216,7 +213,7 @@ const StyledContainer = styled.div`
   flex-direction: row;
     flex-wrap: wrap;
     display: flex;
-    background-color: red;
+    
   .map{
 
   img{

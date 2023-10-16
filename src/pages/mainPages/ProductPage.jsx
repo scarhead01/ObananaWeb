@@ -7,6 +7,8 @@ import Header from '../../components/Header';
 import Rating from '../../components/buttons/Rating';
 import { useCart } from '../../context/CartContext';
 import { styled } from 'styled-components';
+import { get_product } from '../../services/API/controllers/ProductController';
+import { get_vendor } from '../../services/API/controllers/VendorController';
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -15,36 +17,30 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [vendor, setVendor] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  console.log('pagerendered');
+ 
   // const product = ProductList.find(product => product.id === parseInt(id, 10));
  
   useEffect(() => {
-    ProductList()
-      .then(data => {
-        console.log('Product List Data:', data);
-        const selectedProduct = data.find(p => p._id === id);
-        setProduct(selectedProduct);
-        console.log('Selected Product:', selectedProduct);
-        // Fetch vendor data using selected product's vendor_id
-        VendorList()
-          .then(vendorData => {
-            const selectedVendor = vendorData.find(v => v._id === selectedProduct.vendor_id);
-            setVendor(selectedVendor);
-            console.log('Selected Vendor:', selectedVendor);
-          })
-          .catch(error => console.error('Error fetching vendors:', error));
-      })
-      .catch(error => console.error('Error fetching products:', error));
-  }, [id]);
+    get_product(id)
+        .then(productData => {
+            console.log('Product Data:', productData);
+            setProduct(productData.data);
+
+            get_vendor(id)
+                .then(vendorData => {
+                  console.log('Vendor Data:', vendorData);
+                  setProduct(vendorData.data);
+                })
+                .catch(error => console.error('Error fetching vendors:', error));
+        })
+        .catch(error => console.error('Error fetching products:', error));
+}, [id]);
 
   const handleQuantityChange = (e) => {
     const newQuantity = parseInt(e.target.value, 10);
     console.log(`New Quantity: ${newQuantity}`);
     setQuantity(newQuantity);
   };
-
-  
-  
   const handleAddToCart = (e) => {
     e.preventDefault();
   
@@ -64,7 +60,6 @@ const ProductPage = () => {
       setErrorMessage(null);
     }, 2000);
   };
-  
   
   // const baseUrl = "http://143.42.66.33:8000/images/";
 
@@ -87,11 +82,12 @@ const ProductPage = () => {
     {/* <Header className="header" /> */}
     <div className="main">
       <div className="app-container">
+        <div className="wrapper">
         {product ? (
           <div className="product-page-container">
             <div className="left-div">
               <div className="product-image-container">
-                 <img src={product.product_image} alt={product.product_name} className="product-image" />
+                 <img src={product.product_image!=="" ? product.product_image:'https://www.snapon.co.za/images/thumbs/default-image_550.png'} alt={product.product_name} className="product-image" />
               </div>
             </div>
             <div className="middle-div">
@@ -164,7 +160,7 @@ const ProductPage = () => {
           </div>
         ) : null}
         <div className="vendor-info">
-        {vendor && (
+        {vendor ? (
             <div className="vendor-page-container">
               <div className="vendor-details">
                 <Link to={`/vendor/${vendor._id}`}key={vendor._id}>
@@ -179,7 +175,7 @@ const ProductPage = () => {
                 </div>
               </div>
             </div>
-          )}
+          ): null}
 </div>
         {product ? (
   <div className="product-details">
@@ -223,6 +219,7 @@ const ProductPage = () => {
       ) : null}
       </div>
     </div>
+    </div>
   </Con>
 );
 }
@@ -231,17 +228,15 @@ const Con = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
- 
-
   .product-page-container {
     display: flex;
     padding: 10px;
     background-color: white;
+    justify-content: center;
   }
 
   .left-div {
   background-color: #f4f4f4;
-  display: flex;
 }
 
 .product-image-container {
@@ -250,7 +245,10 @@ const Con = styled.div`
   overflow: hidden;
   display: flex;
 }
-
+.wrapper{
+  width: 90%;
+  margin: auto;
+}
 .product-image {
   width: 100%;
   height: 100%;
@@ -259,6 +257,7 @@ const Con = styled.div`
 }
 
 .middle-div {
+ 
   margin: 0 20px;
   background-color: #fff;
   padding: 20px;
@@ -359,6 +358,7 @@ const Con = styled.div`
   }
 
   .product-details {
+   
   padding: 50px;
   background-color: #fff;
   border-radius: 10px;

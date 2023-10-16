@@ -1,29 +1,29 @@
 import ApiConnect from "../ApiConfig";
 
 
-export const get_all_products = async () => {
+export const get_all_vendors = async () => {
     try {
-      const result = await ApiConnect(`products`, {
+      const result = await ApiConnect(`vendors`, {
         method: "GET",
       });
       return result;
     } catch (error) {
       console.log(error);
-      console.log(error + "failed get all products api");
+      console.log(error + "failed get all vendors api");
   
       return error;
     }
   };
 
-  export const get_product = async (productId) => {
+  export const get_vendor = async (vendorId) => {
     try {
-      const result = await ApiConnect(`products/${productId}`, {
+      const result = await ApiConnect(`products/${vendorId}`, {
         method: "GET",
       });
       return result;
     } catch (error) {
       console.log(error);
-      console.log(error + "failed get all products api");
+      console.log(error + "failed get cendor api");
   
       return error;
     }

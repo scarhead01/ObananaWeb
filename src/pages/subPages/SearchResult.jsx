@@ -167,7 +167,8 @@ const SearchCon = styled.div`
  display: flex;
   flex-direction: column;
   height: 100vh;
-
+width: 90%;
+margin: auto;
   a {
   color: #333; /* Change link color to your preference */
   text-decoration: none; /* Remove underline */

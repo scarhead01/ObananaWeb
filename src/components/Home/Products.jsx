@@ -79,23 +79,14 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-import ProductList from '../Products/ProductList';
 
-const Products = () => {
-  const [products, setProducts] = useState([]);
-  
 
-  useEffect(() => {
-    ProductList()
-      .then(data => {
-        // Shuffle the products array
-        const shuffledProducts = data.sort(() => Math.random() - 0.5);
-        // Take the first 5 products
-        const randomProducts = shuffledProducts.slice(0, 5);
-        setProducts(randomProducts);
-      })
-      .catch(error => console.error('Error:', error));
-  }, []);
+const Products = ({product, item}) => {
+
+  // const [products, setProducts] = useState([]);
+  // console.log('loaded'+product);
+
+
 
   const handleHover = (event) => {
     const productName = event.target.innerText;
@@ -103,16 +94,16 @@ const Products = () => {
   };
 
   // const baseUrl = "http://143.42.66.33:8000/images/";
-
+  
   return (
     <ProductCon>
       <div className="wrapper">
       <div className="title"><h6>Featured Products</h6></div>
       <div className="product-list">
-        {products.map(product => (
+        {product?.map((product) => (
           <Link to={`/product/${product._id}`} key={product._id} className="product-card">
             <div className="image-box">
-              <img src={product.product_image} alt={product.product_name} className="product-image" />
+              <img src={product.product_image!=="" ? product.product_image:'https://www.snapon.co.za/images/thumbs/default-image_550.png'} alt={product.product_name} className="product-image" />
             </div>
             <div className="product-details">
               <div className="product-name" onMouseOver={handleHover}>{product.product_name}</div>

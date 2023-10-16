@@ -4,21 +4,24 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-import ProductList from './ProductList';
 import { Pagination } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const ProductListPage = () => {
-  const [products, setProducts] = useState([]);
+const ProductListPage = ({product, item}) => {
+  // const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [maxVisiblePages, setMaxVisiblePages] = useState(10);
-
+  const [prod, setprod] = useState();
   useEffect(() => {
-    ProductList()
-      .then(data => setProducts(data))
-      .catch(error => console.error('Error:', error));
+   
+    if (item <= product.length) {
+      // setprod(product.splice(1, item));
+      setprod([...prod,]);
+    }
+    // }
   }, []);
+
 
   const handleHover = event => {
     const productName = event.target.innerText;
@@ -27,17 +30,17 @@ const ProductListPage = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = product.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
 
-  const totalPageCount = Math.ceil(products.length / itemsPerPage);
+  const totalPageCount = Math.ceil(product.length / itemsPerPage);
 
   const getPageNumbers = () => {
     const activePage = currentPage;
-    const totalPageCount = Math.ceil(products.length / itemsPerPage);
+    const totalPageCount = Math.ceil(product.length / itemsPerPage);
 
     if (totalPageCount <= maxVisiblePages) {
       return [...Array(totalPageCount).keys()].map(i => i + 1);

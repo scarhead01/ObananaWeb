@@ -16,9 +16,11 @@ import Login from '../auth/Login';
 import Register from '../auth/Register';
 import NewAddressFormPopup from '../components/Customers/NewAdress';
 import { get_all_products } from "../services/API/controllers/ProductController";
+import { get_all_vendors } from "../services/API/controllers/VendorController";
 
 const WebRoutes = () => {
   const [product, setproduct] = useState([]);
+  const [vendors, setVendors] = useState([]);
   const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
   const [prodIsLoading, setprodIsLoading] = useState(true); // Add a loading state
@@ -53,6 +55,25 @@ const WebRoutes = () => {
      });
   }, []);
 
+  useEffect(() => {
+    // Fetch vendors and update the state
+     get_all_vendors()
+     .then((result) => {
+       if (result.error) {
+         setError(result.error);
+       } else {
+        setVendors(shuffleArray(result.data));
+       }
+     })
+     .catch((error) => {
+       setError(error.message);
+     })
+     .finally(() => {
+      setIsLoading(false); // Set loading to false when done loading
+    });
+
+  }, []);
+
   return (
     <Container>
       <Router>
@@ -63,7 +84,7 @@ const WebRoutes = () => {
         <div className="mains">
           
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home product={product} vendors={vendors} />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/MoreProducts" element={<MoreProducts />} />
             <Route path="/product/:id" element={<ProductPage />} />
@@ -72,11 +93,13 @@ const WebRoutes = () => {
             <Route path="/vendor/:id" element={<VendorPage />} />
             <Route path="/Search-Results" element={<SearchResult />} />
             <Route path="/MyAccount" element={<AccountPage />} />
-            <Route path="/productlistpage/" element={<ProductListPage />} />
+            <Route path="/productlistpage/" element={<ProductListPage product={product} />} />
 
             <Route exact path="/login" element={<Login/>} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/new-address" element={<NewAddressFormPopup />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/new-address" element={<NewAddressFormPopup />} />
+
+            
           </Routes>
         </div>
       </Router>
